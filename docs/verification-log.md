@@ -221,3 +221,21 @@ ESM Build success
 ```
 
 Notes: The CLI validates the Node version and contradictory output flags, supports help, version, init, rules, and explain, and returns exit 2 for usage errors.
+
+## Phase 12: optional modules
+
+Date: 2026-11-09
+Commands: `npm run style`, `npm run lint`, `npm run typecheck`, `npm test`, `npm run build`
+Result: pass
+Test count: 40 / 40
+Coverage: not collected in this phase
+Evidence:
+
+```
+Test Files  11 passed (11)
+Tests  40 passed (40)
+ESM Build success
+DTS Build success
+```
+
+Notes: Python environment extraction is independently tested. GitHub annotation and SARIF renderers are separately contained modules. Their commits are `25ebb8d` and `b3644da`.
