@@ -185,3 +185,21 @@ DTS Build success
 ```
 
 Notes: Documentation rule modules cover links, anchors, images, references, orphans, scripts, make targets, path mentions, fences, headings, and local binaries. The initial tested increment was committed as `59f2066` before this phase-completion commit.
+
+## Phase 10: ignore directives and baseline
+
+Date: 2026-11-09
+Commands: `npm run style`, `npm run lint`, `npm run typecheck`, `npm test`, `npm run build`
+Result: pass
+Test count: 39 / 39
+Coverage: not collected in this phase
+Evidence:
+
+```
+Test Files  10 passed (10)
+Tests  39 passed (39)
+ESM Build success
+DTS Build success
+```
+
+Notes: Baseline hashes use rule, file, and normalized message so line changes stay hidden while new messages remain visible. The initial implementation supports next-line directives.
