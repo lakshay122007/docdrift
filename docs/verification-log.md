@@ -95,3 +95,21 @@ DTS Build success
 ```
 
 Notes: JSON, JavaScript, and package configuration discovery follow the documented order. Validation reports unknown keys, invalid types, and unknown rule ids as expected errors.
+
+## Phase 5: reporters
+
+Date: 2026-11-09
+Commands: `npm run style`, `npm run lint`, `npm run typecheck`, `npm test`, `npm run build`
+Result: pass
+Test count: 21 / 21
+Coverage: not collected in this phase
+Evidence:
+
+```
+Test Files  5 passed (5)
+Tests  21 passed (21)
+ESM Build success
+DTS Build success
+```
+
+Notes: Compact, JSON, and tree reporters have fixed-output tests. Display limits do not alter the original findings used for exit-code evaluation.
