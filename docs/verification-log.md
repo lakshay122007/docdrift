@@ -77,3 +77,21 @@ DTS Build success
 ```
 
 Notes: The symlink-loop test completes by skipping symlinks. The reader covers BOM and CRLF normalization, binary files, and files over 1 MB. The remaining named fixture directories will be completed in Phase 13.
+
+## Phase 4: config
+
+Date: 2026-11-09
+Commands: `npm run style`, `npm run lint`, `npm run typecheck`, `npm test`, `npm run build`
+Result: pass
+Test count: 17 / 17
+Coverage: not collected in this phase
+Evidence:
+
+```
+Test Files  4 passed (4)
+Tests  17 passed (17)
+ESM Build success
+DTS Build success
+```
+
+Notes: JSON, JavaScript, and package configuration discovery follow the documented order. Validation reports unknown keys, invalid types, and unknown rule ids as expected errors.
