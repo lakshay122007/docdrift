@@ -113,3 +113,21 @@ DTS Build success
 ```
 
 Notes: Compact, JSON, and tree reporters have fixed-output tests. Display limits do not alter the original findings used for exit-code evaluation.
+
+## Phase 6: env extractors
+
+Date: 2026-11-09
+Commands: `npm run style`, `npm run lint`, `npm run typecheck`, `npm test`, `npm run build`
+Result: pass
+Test count: 26 / 26
+Coverage: not collected in this phase
+Evidence:
+
+```
+Test Files  6 passed (6)
+Tests  26 passed (26)
+ESM Build success
+DTS Build success
+```
+
+Notes: The JavaScript extractor uses Babel AST parsing for code access and ignores comments and strings. Its fallback only recognizes direct `process.env.NAME` patterns after a parse error. Compose supports map and list environments; invalid YAML returns no declarations rather than throwing.
