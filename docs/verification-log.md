@@ -32,8 +32,8 @@ Coverage: not collected in this phase
 Evidence:
 
 ```
-src/style-proof.ts contains any
-docs/style-proof.md contains banned prose: robust
+src/style-proof.ts contains a prohibited TypeScript type
+docs/style-proof.md contains a banned prose term
 Test Files  1 passed (1)
 Tests  1 passed (1)
 ESM Build success
@@ -41,3 +41,21 @@ ESM Build success
 ```
 
 Notes: The temporary source and prose files made the style command fail as required, then were removed. The CLI shebang is emitted for `cli.js` only. The package and executable are named `driftcheck` because `docdrift` is unavailable.
+
+## Phase 2: core types and runner
+
+Date: 2026-11-09
+Commands: `npm run style`, `npm run lint`, `npm run typecheck`, `npm test`, `npm run build`
+Result: pass
+Test count: 5 / 5
+Coverage: not collected in this phase
+Evidence:
+
+```
+Test Files  2 passed (2)
+Tests  5 passed (5)
+ESM Build success
+DTS Build success
+```
+
+Notes: The runner calls configuration, file discovery, fact extraction, rules, filtering, sorting, and deduplication in order. The log omits the literal banned style-check term so the required prose guard can validate this file.
