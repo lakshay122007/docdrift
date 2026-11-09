@@ -59,3 +59,21 @@ DTS Build success
 ```
 
 Notes: The runner calls configuration, file discovery, fact extraction, rules, filtering, sorting, and deduplication in order. The log omits the literal banned style-check term so the required prose guard can validate this file.
+
+## Phase 3: filesystem layer
+
+Date: 2026-11-09
+Commands: `npm run style`, `npm run lint`, `npm run typecheck`, `npm test`, `npm run build`
+Result: pass
+Test count: 11 / 11
+Coverage: not collected in this phase
+Evidence:
+
+```
+Test Files  3 passed (3)
+Tests  11 passed (11)
+ESM Build success
+DTS Build success
+```
+
+Notes: The symlink-loop test completes by skipping symlinks. The reader covers BOM and CRLF normalization, binary files, and files over 1 MB. The remaining named fixture directories will be completed in Phase 13.
