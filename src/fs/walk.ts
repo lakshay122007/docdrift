@@ -1,6 +1,10 @@
+import { createRequire } from "node:module";
 import { readFile, readdir } from "node:fs/promises";
 import { relative, resolve } from "node:path";
-import ignore from "ignore";
+import type { Ignore } from "ignore";
+
+const require = createRequire(import.meta.url);
+const createIgnore = require("ignore") as () => Ignore;
 
 const skippedDirectories = new Set(["node_modules", ".git", "dist", "build", "coverage"]);
 
@@ -27,7 +31,7 @@ export async function walkFiles(
   root: string,
   options: WalkOptions = {},
 ): Promise<string[]> {
-  const matcher = ignore();
+  const matcher = createIgnore();
   matcher.add(await readGitignore(root, options.useGitignore ?? true));
   matcher.add(options.ignorePatterns ?? []);
   const files: string[] = [];

@@ -38,7 +38,8 @@ async function listFiles(directory) {
 }
 
 function isAllowedConsoleFile(file) {
-  return file === "src/cli.ts" || file.startsWith("src/report/");
+  const posixFile = file.replaceAll("\\", "/");
+  return posixFile === "src/cli.ts" || posixFile.startsWith("src/report/");
 }
 
 async function checkSourceFiles() {
