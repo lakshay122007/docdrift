@@ -131,3 +131,21 @@ DTS Build success
 ```
 
 Notes: The JavaScript extractor uses Babel AST parsing for code access and ignores comments and strings. Its fallback only recognizes direct `process.env.NAME` patterns after a parse error. Compose supports map and list environments; invalid YAML returns no declarations rather than throwing.
+
+## Phase 7: env rules and fix
+
+Date: 2026-11-09
+Commands: `npm run style`, `npm run lint`, `npm run typecheck`, `npm test`, `npm run build`
+Result: pass
+Test count: 30 / 30
+Coverage: not collected in this phase
+Evidence:
+
+```
+Test Files  7 passed (7)
+Tests  30 passed (30)
+ESM Build success
+DTS Build success
+```
+
+Notes: Environment rules cover undocumented, unused, duplicate, empty, workflow, documentation, and dynamic access cases. The fix only appends missing keys and its dry-run test confirms the original CRLF file remains unchanged. The CI compatibility repair was committed separately as `065e5f8` and GitHub Actions completed successfully.
