@@ -1,0 +1,79 @@
+{
+  "name": "driftcheck",
+  "version": "0.1.0",
+  "description": "Find where docs and env setup have drifted from the code",
+  "type": "module",
+  "bin": {
+    "driftcheck": "dist/cli.js"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "docs",
+    "readme",
+    "env",
+    "dotenv",
+    "lint",
+    "ci",
+    "maintainers",
+    "cli"
+  ],
+  "license": "MIT",
+  "author": "lakshay122007",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lakshay122007/docdrift.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lakshay122007/docdrift/issues"
+  },
+  "homepage": "https://github.com/lakshay122007/docdrift#readme",
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest run",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "style": "node scripts/check-style.mjs",
+    "drift": "node dist/cli.js",
+    "prepublishOnly": "npm run style && npm run lint && npm run typecheck && npm test && npm run build"
+  },
+  "dependencies": {
+    "@babel/parser": "^8.1.0",
+    "ignore": "^7.0.14",
+    "picocolors": "^1.1.1",
+    "remark-frontmatter": "^5.0.0",
+    "remark-gfm": "^4.0.1",
+    "remark-parse": "^11.0.0",
+    "unified": "^11.0.5",
+    "unist-util-visit": "^5.2.0",
+    "yaml": "^2.9.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^26.6.6",
+    "@vitest/coverage-v8": "^5.1.0",
+    "eslint": "^10.14.0",
+    "prettier": "^3.9.10",
+    "tsup": "^9.0.0",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.72.1",
+    "vitest": "^5.1.0"
+  }
+}
