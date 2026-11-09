@@ -4,6 +4,7 @@ import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import { findBrokenLinks } from "../src/rules/docs/link.js";
 import { findMissingScripts } from "../src/rules/docs/script.js";
+import { findReferenceProblems } from "../src/rules/docs/reference.js";
 import type { MarkdownLink } from "../src/types.js";
 const link = (target: string): MarkdownLink => ({
   kind: "markdown-link",
@@ -46,5 +47,13 @@ describe("docs rules", () => {
         { build: "tsup" },
       ),
     ).toHaveLength(1);
+  });
+  it("reports undefined and unused reference labels", () => {
+    expect(
+      findReferenceProblems("README.md", "[a][missing]\n[unused]: /x").map(
+        (finding) => finding.rule,
+      ),
+    ).toEqual(["docs-ref-undefined", "docs-ref-unused"]);
+    expect(findReferenceProblems("README.md", "[a][ok]\n[ok]: /x")).toEqual([]);
   });
 });

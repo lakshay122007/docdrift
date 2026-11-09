@@ -167,3 +167,21 @@ DTS Build success
 ```
 
 Notes: Markdown parsing supports front matter, setext headings, links, inline paths, fences, and script references. Slug tests cover punctuation, inline Markdown, links, and duplicate headings.
+
+## Phase 9: docs rules
+
+Date: 2026-11-09
+Commands: `npm run style`, `npm run lint`, `npm run typecheck`, `npm test`, `npm run build`
+Result: pass
+Test count: 36 / 36
+Coverage: not collected in this phase
+Evidence:
+
+```
+Test Files  9 passed (9)
+Tests  36 passed (36)
+ESM Build success
+DTS Build success
+```
+
+Notes: Documentation rule modules cover links, anchors, images, references, orphans, scripts, make targets, path mentions, fences, headings, and local binaries. The initial tested increment was committed as `59f2066` before this phase-completion commit.
