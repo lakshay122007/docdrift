@@ -149,3 +149,21 @@ DTS Build success
 ```
 
 Notes: Environment rules cover undocumented, unused, duplicate, empty, workflow, documentation, and dynamic access cases. The fix only appends missing keys and its dry-run test confirms the original CRLF file remains unchanged. The CI compatibility repair was committed separately as `065e5f8` and GitHub Actions completed successfully.
+
+## Phase 8: markdown extractor and slugs
+
+Date: 2026-11-09
+Commands: `npm run style`, `npm run lint`, `npm run typecheck`, `npm test`, `npm run build`
+Result: pass
+Test count: 33 / 33
+Coverage: not collected in this phase
+Evidence:
+
+```
+Test Files  8 passed (8)
+Tests  33 passed (33)
+ESM Build success
+DTS Build success
+```
+
+Notes: Markdown parsing supports front matter, setext headings, links, inline paths, fences, and script references. Slug tests cover punctuation, inline Markdown, links, and duplicate headings.
