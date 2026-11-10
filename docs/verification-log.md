@@ -262,6 +262,22 @@ js-env.ts parse fallback, report/write.ts EPIPE
 
 Notes: The 85% Phase 13 gate has not passed yet. The listed files are grouped as never imported, partly tested, and error-path-only targets. No coverage exclusion was added beyond the approved source files.
 
+Coverage after:
+
+```
+All included files: 91.45% lines
+src: 97.75% lines
+src/config: 84.24%  src/extract: 94.03%  src/fs: 83.04%
+src/ignore: 100%  src/report: 85.57%  src/rules/docs: 90.90%
+src/rules/env: 100%  src/util: 100%
+```
+
+Commands: `npm test -- --coverage`, `npm run style`, `npm run lint`, `npm run typecheck`, `npm run build`
+Result: pass
+Test count: 57 / 57
+Coverage: 97.75% lines in `src/`, with only `src/cli.ts`, `src/index.ts`, and type-only `src/types.ts` excluded.
+Notes: The Phase 13 coverage gate passes. Regression tests also cover link casing, URL decoding, directory targets, prose-safe script parsing, normalized orphan paths, and directive ranges.
+
 ## Manual step 1: rename to driftcheck
 
 Date: 2026-11-10
