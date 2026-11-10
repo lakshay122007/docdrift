@@ -29,6 +29,8 @@ async function main(): Promise<void> {
       quiet: { type: "boolean" },
       verbose: { type: "boolean" },
       format: { type: "string" },
+      "fail-on": { type: "string" },
+      "max-issues": { type: "string" },
     },
   });
   if (parsed.values.quiet && parsed.values.verbose)
@@ -84,7 +86,27 @@ async function main(): Promise<void> {
     command === "check" && firstArgument !== "check"
       ? (firstArgument ?? process.cwd())
       : (parsed.positionals[1] ?? process.cwd());
-  const result = await scan(path, parsed.values.format ?? "tree");
+  const format = parsed.values.format;
+  if (format && !["tree", "compact", "json", "github", "sarif"].includes(format))
+    throw new DriftcheckError(`Unknown format: ${format}`);
+  const failOn = parsed.values["fail-on"];
+  if (failOn && !["error", "warn", "info", "never"].includes(failOn))
+    throw new DriftcheckError(`Unknown fail-on severity: ${failOn}`);
+  const maximumIssues =
+    parsed.values["max-issues"] === undefined
+      ? undefined
+      : Number(parsed.values["max-issues"]);
+  if (
+    maximumIssues !== undefined &&
+    (!Number.isInteger(maximumIssues) || maximumIssues < 0)
+  )
+    throw new DriftcheckError("--max-issues must be a non-negative integer");
+  const result = await scan(path, {
+    format: format as "tree" | "compact" | "json" | "github" | "sarif" | undefined,
+    mode: command === "env" ? "env" : command === "docs" ? "docs" : "all",
+    failOn: failOn as "error" | "warn" | "info" | "never" | undefined,
+    maxIssues: maximumIssues,
+  });
   process.stdout.write(result.output);
   process.exitCode = result.exitCode;
 }
