@@ -284,3 +284,20 @@ Date: 2026-11-10
 Commands: `npm run style`, `npm run lint`, `npm run typecheck`, `npm test`, `npm run build`
 Result: pass
 Notes: Renamed the error class, config type, config file names, package.json config key, ignore comment prefix, repository URLs and CI temp name from docdrift to driftcheck. The GitHub repository is now named driftcheck.
+
+## Phase 14: performance and input handling
+
+Date: 2026-11-10
+Commands: generated 5,000 Markdown files, a 50 MB file, a binary file, and malformed YAML; ran `node dist/cli.js <fixture> --format compact`
+Result: pass
+Test count: 58 / 58
+Coverage: 97.75% lines in `src/`
+Evidence:
+
+```
+real 1.12
+user 1.22
+sys 0.35
+```
+
+Notes: The synthetic scan completed under the five-second target without a crash. The binary and 50 MB files were safely skipped by the reader, and malformed YAML did not prevent the scan from completing.
