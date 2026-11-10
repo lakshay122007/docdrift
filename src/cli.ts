@@ -4,6 +4,7 @@ import { readFile, writeFile } from "node:fs/promises";
 import { parseArgs } from "node:util";
 import { defaultConfig, ruleIds } from "./config/defaults.js";
 import { DriftcheckError } from "./util/errors.js";
+import { scan } from "./simple-scan.js";
 const packageFile = new URL("../package.json", import.meta.url);
 async function readVersion(): Promise<string> {
   const data: unknown = JSON.parse(await readFile(packageFile, "utf8"));
@@ -27,6 +28,7 @@ async function main(): Promise<void> {
       help: { type: "boolean", short: "h" },
       quiet: { type: "boolean" },
       verbose: { type: "boolean" },
+      format: { type: "string" },
     },
   });
   if (parsed.values.quiet && parsed.values.verbose)
@@ -78,7 +80,13 @@ async function main(): Promise<void> {
   }
   if (!["check", "env", "docs", "fix", "baseline"].includes(command))
     throw new DriftcheckError(`Unknown command: ${command}`);
-  console.log("nothing to scan");
+  const path =
+    command === "check" && firstArgument !== "check"
+      ? (firstArgument ?? process.cwd())
+      : (parsed.positionals[1] ?? process.cwd());
+  const result = await scan(path, parsed.values.format ?? "tree");
+  process.stdout.write(result.output);
+  process.exitCode = result.exitCode;
 }
 void main().catch((error: unknown) => {
   console.error(error instanceof Error ? error.message : String(error));
