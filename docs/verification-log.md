@@ -239,3 +239,25 @@ DTS Build success
 ```
 
 Notes: Python environment extraction is independently tested. GitHub annotation and SARIF renderers are separately contained modules. Their commits are `25ebb8d` and `b3644da`.
+
+## Phase 13: fixtures, end-to-end tests, evidence
+
+Date: 2026-11-09
+Coverage before:
+
+```
+All files: 74.31% lines
+src/: 53.98% lines
+0%: report/github.ts, report/sarif.ts, report/write.ts,
+extract/makefile.ts, extract/package-json.ts, rules/docs/bin.ts,
+rules/docs/duplicate-heading.ts, rules/docs/fence.ts,
+rules/docs/make-target.ts, rules/docs/orphan.ts, rules/docs/path.ts,
+rules/env/dynamic-access.ts, rules/env/missing-in-ci.ts,
+rules/env/not-in-docs.ts
+Partly tested: config/schema.ts (59.28%), fs/read.ts (65.71%),
+rules/docs/link.ts (55.81%), extract/dotenv.ts (76.92%)
+Error paths only: config/load.ts invalid JSON, fs/read.ts EACCES and ENOENT,
+js-env.ts parse fallback, report/write.ts EPIPE
+```
+
+Notes: The 85% Phase 13 gate has not passed yet. The listed files are grouped as never imported, partly tested, and error-path-only targets. No coverage exclusion was added beyond the approved source files.

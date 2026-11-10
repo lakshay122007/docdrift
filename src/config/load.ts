@@ -28,6 +28,9 @@ export async function loadConfig(
   root: string,
   explicitFile?: string,
 ): Promise<DocdriftConfig> {
+  if (explicitFile && !(await exists(resolve(root, explicitFile)))) {
+    throw new DocdriftError(`Config file not found: ${explicitFile}`);
+  }
   const candidates = explicitFile
     ? [resolve(root, explicitFile)]
     : [resolve(root, "docdrift.config.json"), resolve(root, "docdrift.config.js")];
