@@ -6,7 +6,14 @@ import type { Ignore } from "ignore";
 const require = createRequire(import.meta.url);
 const createIgnore = require("ignore") as () => Ignore;
 
-const skippedDirectories = new Set(["node_modules", ".git", "dist", "build", "coverage"]);
+const skippedDirectories = new Set([
+  "node_modules",
+  ".git",
+  ".yarn",
+  "dist",
+  "build",
+  "coverage",
+]);
 
 export interface WalkOptions {
   ignorePatterns?: string[];

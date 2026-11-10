@@ -20,9 +20,9 @@ describe("markdown extraction", () => {
     expect(facts.paths.map((path) => path.value)).toContain("src/app.ts");
     expect(facts.fencesWithoutLanguage).toHaveLength(1);
   });
-  it("collects script references", () => {
+  it("collects explicit script references", () => {
     expect(
-      extractMarkdown("Run npm run build and pnpm test", "README.md").scripts.map(
+      extractMarkdown("Run npm run build and npm test", "README.md").scripts.map(
         (script) => script.script,
       ),
     ).toEqual(["build", "test"]);

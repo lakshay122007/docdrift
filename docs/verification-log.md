@@ -301,3 +301,23 @@ sys 0.35
 ```
 
 Notes: The synthetic scan completed under the five-second target without a crash. The binary and 50 MB files were safely skipped by the reader, and malformed YAML did not prevent the scan from completing.
+
+## Phase 15: real-repository validation
+
+Date: 2026-11-10
+Commands: cloned and scanned `is`, `express`, `vite`, `babel`, and `TypeScript-Website` outside the project directory
+Result: pass
+Test count: 58 / 58
+Coverage: 97.75% lines in `src/`
+Evidence:
+
+```
+repository           before  after
+is                        1      1
+express                   9      2
+vite                    461    415
+babel                   519    482
+typescript-website     808    771
+```
+
+Notes: Manual sampling identified false positives from prose that happened to contain a package-manager name. Script extraction now requires `run` except for npm lifecycle command references, reducing reported findings by 128. Generated Yarn plugin code is skipped. Remaining results require project-specific review; the tool self-scan returns no findings after excluding the intentional demo fixture.

@@ -85,10 +85,9 @@ export function extractMarkdown(text: string, file: string): MarkdownFacts {
     }
     if (node.type === "text") {
       for (const match of node.value.matchAll(
-        /\b(?:npm|yarn|pnpm|bun)\s+(?:run\s+)?([A-Za-z0-9:_-]+)/g,
+        /\b(?:npm|yarn|pnpm|bun)\s+run\s+([A-Za-z0-9:_-]+)|\bnpm\s+(test|start|stop|restart)\b/g,
       )) {
-        const script = match[1] ?? "";
-        if (["to", "and", "or", "the", "a"].includes(script)) continue;
+        const script = match[1] ?? match[2] ?? "";
         scripts.push({
           kind: "script-reference",
           command: match[0] ?? "",
