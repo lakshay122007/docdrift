@@ -338,3 +338,21 @@ package size: 31.5 kB
 ```
 
 Notes: README, architecture, concepts, viva, demo, changelog, and representative rule explanations describe the current implementation and demo output.
+
+## Phase 17: pre-publish verification
+
+Date: 2026-11-10
+Commands: `npm run build`, `npm pack --dry-run`, `npm pack`, clean-directory `npm install`, `npx driftcheck --version`, `npx driftcheck --help`, `npm audit --omit=dev`
+Result: pass
+Test count: 58 / 58
+Coverage: 97.75% lines in `src/`
+Evidence:
+
+```
+driftcheck-0.1.0.tgz
+package size: 31.5 kB
+0.1.0
+found 0 vulnerabilities
+```
+
+Notes: The tarball installed in a clean temporary directory. Its binary printed the version, help text, and real demo findings. The package file list contains package metadata, license, readme, changelog, and distribution files.
