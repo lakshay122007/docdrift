@@ -356,3 +356,13 @@ found 0 vulnerabilities
 ```
 
 Notes: The tarball installed in a clean temporary directory. Its binary printed the version, help text, and real demo findings. The package file list contains package metadata, license, readme, changelog, and distribution files.
+
+## Phase 18: handover
+
+Date: 2026-11-10
+Commands: author publishing commands supplied below
+Result: pass
+Test count: 58 / 58
+Coverage: 97.75% lines in `src/`
+Evidence: package, demo, and audit checks completed in Phase 17.
+Notes: The agent did not run npm login or npm publish. The package name is `driftcheck` because `docdrift` was unavailable.
