@@ -41,7 +41,19 @@ async function main(): Promise<void> {
     );
     return;
   }
-  const command = parsed.positionals[0] ?? "check";
+  const firstArgument = parsed.positionals[0];
+  const knownCommands = [
+    "check",
+    "env",
+    "docs",
+    "fix",
+    "baseline",
+    "init",
+    "rules",
+    "explain",
+  ];
+  const command =
+    firstArgument && knownCommands.includes(firstArgument) ? firstArgument : "check";
   if (command === "init") {
     await writeFile(
       "driftcheck.config.json",
