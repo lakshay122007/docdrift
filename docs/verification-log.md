@@ -321,3 +321,20 @@ typescript-website     808    771
 ```
 
 Notes: Manual sampling identified false positives from prose that happened to contain a package-manager name. Script extraction now requires `run` except for npm lifecycle command references, reducing reported findings by 128. Generated Yarn plugin code is skipped. Remaining results require project-specific review; the tool self-scan returns no findings after excluding the intentional demo fixture.
+
+## Phase 16: documentation for faculty
+
+Date: 2026-11-10
+Commands: `npm run style`, `npm run lint`, `npm run typecheck`, `npm test`, `npm run build`, `npm pack --dry-run`
+Result: pass
+Test count: 58 / 58
+Coverage: 97.75% lines in `src/`
+Evidence:
+
+```
+Test Files  15 passed (15)
+Tests  58 passed (58)
+package size: 31.5 kB
+```
+
+Notes: README, architecture, concepts, viva, demo, changelog, and representative rule explanations describe the current implementation and demo output.
