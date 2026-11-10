@@ -1,4 +1,4 @@
-import { access } from "node:fs/promises";
+import { access, stat } from "node:fs/promises";
 import { dirname, relative, resolve } from "node:path";
 
 export interface LinkTarget {
@@ -27,4 +27,17 @@ export async function pathExists(path: string): Promise<boolean> {
   } catch {
     return false;
   }
+}
+
+export async function resolveDirectoryTarget(path: string): Promise<string> {
+  try {
+    if (!(await stat(path)).isDirectory()) return path;
+    for (const name of ["README.md", "index.md"]) {
+      const candidate = resolve(path, name);
+      if (await pathExists(candidate)) return candidate;
+    }
+  } catch {
+    return path;
+  }
+  return path;
 }

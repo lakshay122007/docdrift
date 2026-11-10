@@ -8,6 +8,13 @@ export function filterInlineIgnores(text: string, findings: Finding[]): Finding[
     const directive = `${previous}\n${current}`.match(
       /driftcheck-ignore(?:-next-line)?\s+([\w-]+)?/,
     );
-    return !directive || (directive[1] !== undefined && directive[1] !== finding.rule);
+    if (directive && (directive[1] === undefined || directive[1] === finding.rule))
+      return false;
+    let disabled = false;
+    for (const line of lines.slice(0, finding.line)) {
+      if (new RegExp(`driftcheck-disable\\s+${finding.rule}`).test(line)) disabled = true;
+      if (new RegExp(`driftcheck-enable\\s+${finding.rule}`).test(line)) disabled = false;
+    }
+    return !disabled;
   });
 }

@@ -85,14 +85,17 @@ export function extractMarkdown(text: string, file: string): MarkdownFacts {
     }
     if (node.type === "text") {
       for (const match of node.value.matchAll(
-        /\b(?:npm|yarn|pnpm|bun)(?:\s+run)?\s+([A-Za-z0-9:_-]+)/g,
-      ))
+        /\b(?:npm|yarn|pnpm|bun)\s+(?:run\s+)?([A-Za-z0-9:_-]+)/g,
+      )) {
+        const script = match[1] ?? "";
+        if (["to", "and", "or", "the", "a"].includes(script)) continue;
         scripts.push({
           kind: "script-reference",
           command: match[0] ?? "",
-          script: match[1] ?? "",
+          script,
           ...location,
         });
+      }
     }
   });
   return { headings, links, scripts, paths, fencesWithoutLanguage };

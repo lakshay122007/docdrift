@@ -1,5 +1,10 @@
 import type { Finding, MarkdownHeading, MarkdownLink } from "../../types.js";
-import { pathExists, resolveLinkTarget } from "../../fs/link-target.js";
+import { findCaseMismatch } from "../../fs/paths.js";
+import {
+  pathExists,
+  resolveDirectoryTarget,
+  resolveLinkTarget,
+} from "../../fs/link-target.js";
 
 export async function findBrokenLinks(
   root: string,
@@ -16,6 +21,17 @@ export async function findBrokenLinks(
         rule: "docs-link-outside-root",
         severity: "warn",
         message: "link resolves outside the repository root",
+      });
+      continue;
+    }
+    target.path = await resolveDirectoryTarget(target.path);
+    const mismatch = await findCaseMismatch(target.path);
+    if (mismatch) {
+      findings.push({
+        ...link,
+        rule: "docs-link-case-mismatch",
+        severity: "error",
+        message: `link casing does not match file: ${mismatch}`,
       });
       continue;
     }
