@@ -1,10 +1,10 @@
-import { DocdriftError } from "../util/errors.js";
+import { DriftcheckError } from "../util/errors.js";
 import { defaultConfig, ruleIds, type RuleId } from "./defaults.js";
 
 export type RuleSeverity = "error" | "warn" | "info" | "off";
 export type RuleSeverityMap = Record<RuleId, RuleSeverity>;
 
-export interface DocdriftConfig {
+export interface DriftcheckConfig {
   include: string[];
   ignore: string[];
   rules: RuleSeverityMap;
@@ -58,49 +58,50 @@ function validateKeys(
 ): void {
   for (const key of Object.keys(value)) {
     if (!allowed.has(key)) {
-      throw new DocdriftError(`Unknown config key: ${path}${key}`);
+      throw new DriftcheckError(`Unknown config key: ${path}${key}`);
     }
   }
 }
 
 function validateStringArray(value: unknown, path: string): string[] {
   if (!Array.isArray(value) || value.some((item) => typeof item !== "string")) {
-    throw new DocdriftError(`Expected ${path} to be an array of strings`);
+    throw new DriftcheckError(`Expected ${path} to be an array of strings`);
   }
   return value;
 }
 
 function validateBoolean(value: unknown, path: string): boolean {
   if (typeof value !== "boolean") {
-    throw new DocdriftError(`Expected ${path} to be a boolean`);
+    throw new DriftcheckError(`Expected ${path} to be a boolean`);
   }
   return value;
 }
 
-export function validateConfig(input: unknown): Partial<DocdriftConfig> {
+export function validateConfig(input: unknown): Partial<DriftcheckConfig> {
   if (!isRecord(input)) {
-    throw new DocdriftError("Expected config to be an object");
+    throw new DriftcheckError("Expected config to be an object");
   }
   validateKeys(input, topLevelKeys, "");
-  const config: Partial<DocdriftConfig> = {};
+  const config: Partial<DriftcheckConfig> = {};
 
   if ("include" in input) config.include = validateStringArray(input.include, "include");
   if ("ignore" in input) config.ignore = validateStringArray(input.ignore, "ignore");
   if ("rules" in input) {
-    if (!isRecord(input.rules)) throw new DocdriftError("Expected rules to be an object");
+    if (!isRecord(input.rules))
+      throw new DriftcheckError("Expected rules to be an object");
     const rules: Partial<RuleSeverityMap> = {};
     for (const [rule, severity] of Object.entries(input.rules)) {
       if (!ruleIds.includes(rule as RuleId))
-        throw new DocdriftError(`Unknown rule id: rules.${rule}`);
+        throw new DriftcheckError(`Unknown rule id: rules.${rule}`);
       if (typeof severity !== "string" || !severities.has(severity as RuleSeverity)) {
-        throw new DocdriftError(`Expected rules.${rule} to be a valid severity`);
+        throw new DriftcheckError(`Expected rules.${rule} to be a valid severity`);
       }
       rules[rule as RuleId] = severity as RuleSeverity;
     }
     config.rules = { ...defaultConfig.rules, ...rules };
   }
   if ("env" in input) {
-    if (!isRecord(input.env)) throw new DocdriftError("Expected env to be an object");
+    if (!isRecord(input.env)) throw new DriftcheckError("Expected env to be an object");
     validateKeys(input.env, envKeys, "env.");
     config.env = {
       ...defaultConfig.env,
@@ -134,7 +135,7 @@ export function validateConfig(input: unknown): Partial<DocdriftConfig> {
     };
   }
   if ("docs" in input) {
-    if (!isRecord(input.docs)) throw new DocdriftError("Expected docs to be an object");
+    if (!isRecord(input.docs)) throw new DriftcheckError("Expected docs to be an object");
     validateKeys(input.docs, docsKeys, "docs.");
     config.docs = {
       ...defaultConfig.docs,
@@ -164,7 +165,7 @@ export function validateConfig(input: unknown): Partial<DocdriftConfig> {
   return config;
 }
 
-export function mergeConfig(config: Partial<DocdriftConfig>): DocdriftConfig {
+export function mergeConfig(config: Partial<DriftcheckConfig>): DriftcheckConfig {
   return {
     ...defaultConfig,
     ...config,

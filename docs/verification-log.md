@@ -261,3 +261,10 @@ js-env.ts parse fallback, report/write.ts EPIPE
 ```
 
 Notes: The 85% Phase 13 gate has not passed yet. The listed files are grouped as never imported, partly tested, and error-path-only targets. No coverage exclusion was added beyond the approved source files.
+
+## Manual step 1: rename to driftcheck
+
+Date: 2026-11-10
+Commands: `npm run style`, `npm run lint`, `npm run typecheck`, `npm test`, `npm run build`
+Result: pass
+Notes: Renamed the error class, config type, config file names, package.json config key, ignore comment prefix, repository URLs and CI temp name from docdrift to driftcheck. The GitHub repository is now named driftcheck.

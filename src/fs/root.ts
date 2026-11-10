@@ -2,8 +2,8 @@ import { access } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 
 const rootMarkers = [
-  "docdrift.config.json",
-  "docdrift.config.js",
+  "driftcheck.config.json",
+  "driftcheck.config.js",
   "package.json",
   ".git",
 ];

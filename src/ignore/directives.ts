@@ -6,7 +6,7 @@ export function filterInlineIgnores(text: string, findings: Finding[]): Finding[
     const previous = lines[finding.line - 2] ?? "";
     const current = lines[finding.line - 1] ?? "";
     const directive = `${previous}\n${current}`.match(
-      /docdrift-ignore(?:-next-line)?\s+([\w-]+)?/,
+      /driftcheck-ignore(?:-next-line)?\s+([\w-]+)?/,
     );
     return !directive || (directive[1] !== undefined && directive[1] !== finding.rule);
   });

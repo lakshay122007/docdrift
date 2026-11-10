@@ -38,12 +38,12 @@
   "author": "lakshay122007",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lakshay122007/docdrift.git"
+    "url": "git+https://github.com/lakshay122007/driftcheck.git"
   },
   "bugs": {
-    "url": "https://github.com/lakshay122007/docdrift/issues"
+    "url": "https://github.com/lakshay122007/driftcheck/issues"
   },
-  "homepage": "https://github.com/lakshay122007/docdrift#readme",
+  "homepage": "https://github.com/lakshay122007/driftcheck#readme",
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",

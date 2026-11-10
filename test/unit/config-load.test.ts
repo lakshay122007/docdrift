@@ -4,7 +4,7 @@ import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import { loadConfig } from "../../src/config/load.js";
 import { validateConfig } from "../../src/config/schema.js";
-import { DocdriftError } from "../../src/util/errors.js";
+import { DriftcheckError } from "../../src/util/errors.js";
 
 const root = () => mkdtemp(join(tmpdir(), "driftcheck-config-unit-"));
 
@@ -37,7 +37,7 @@ describe("config load and validate", () => {
     const directory = await root();
     await writeFile(
       join(directory, "package.json"),
-      JSON.stringify({ docdrift: { env: { includeLocal: true } } }),
+      JSON.stringify({ driftcheck: { env: { includeLocal: true } } }),
     );
     await expect(loadConfig(directory)).resolves.toMatchObject({
       env: { includeLocal: true },
@@ -52,7 +52,7 @@ describe("config load and validate", () => {
   });
   it("rejects invalid JSON with exit code 2", async () => {
     const directory = await root();
-    await writeFile(join(directory, "docdrift.config.json"), "{");
-    await expect(loadConfig(directory)).rejects.toBeInstanceOf(DocdriftError);
+    await writeFile(join(directory, "driftcheck.config.json"), "{");
+    await expect(loadConfig(directory)).rejects.toBeInstanceOf(DriftcheckError);
   });
 });

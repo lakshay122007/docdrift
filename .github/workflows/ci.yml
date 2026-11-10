@@ -27,4 +27,4 @@ jobs:
       - run: npm pack --dry-run
       - run: |
           npm pack
-          node -e "require('fs').mkdtempSync('docdrift-pack-')"
+          node -e "require('fs').mkdtempSync('driftcheck-pack-')"

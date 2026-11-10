@@ -33,7 +33,7 @@ describe("ignores", () => {
   it("filters a next-line inline directive", () => {
     expect(
       filterInlineIgnores(
-        "// docdrift-ignore-next-line env-undocumented\nprocess.env.KEY",
+        "// driftcheck-ignore-next-line env-undocumented\nprocess.env.KEY",
         [finding],
       ),
     ).toEqual([]);

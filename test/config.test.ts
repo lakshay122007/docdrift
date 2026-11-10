@@ -5,7 +5,7 @@ import { describe, expect, it } from "vitest";
 
 import { loadConfig } from "../src/config/load.js";
 import { validateConfig } from "../src/config/schema.js";
-import { DocdriftError } from "../src/util/errors.js";
+import { DriftcheckError } from "../src/util/errors.js";
 
 async function temporaryDirectory(): Promise<string> {
   return mkdtemp(join(tmpdir(), "driftcheck-config-"));
@@ -43,7 +43,7 @@ describe("configuration", () => {
 
   it("rejects invalid JSON", async () => {
     const root = await temporaryDirectory();
-    await writeFile(join(root, "docdrift.config.json"), "{");
-    await expect(loadConfig(root)).rejects.toBeInstanceOf(DocdriftError);
+    await writeFile(join(root, "driftcheck.config.json"), "{");
+    await expect(loadConfig(root)).rejects.toBeInstanceOf(DriftcheckError);
   });
 });

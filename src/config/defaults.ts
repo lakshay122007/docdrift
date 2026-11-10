@@ -1,4 +1,4 @@
-import type { DocdriftConfig, RuleSeverityMap } from "./schema.js";
+import type { DriftcheckConfig, RuleSeverityMap } from "./schema.js";
 
 export const ruleIds = [
   "env-undocumented",
@@ -60,7 +60,7 @@ export const defaultRules: RuleSeverityMap = {
   "scan-skipped": "info",
 };
 
-export const defaultConfig: DocdriftConfig = {
+export const defaultConfig: DriftcheckConfig = {
   include: ["**/*"],
   ignore: [],
   rules: defaultRules,

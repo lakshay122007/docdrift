@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import { exitCodeForFindings } from "../src/exit-codes.js";
 import { run, sortAndDedupeFindings } from "../src/run.js";
 import type { Finding } from "../src/types.js";
-import { DocdriftError } from "../src/util/errors.js";
+import { DriftcheckError } from "../src/util/errors.js";
 
 const findings: Finding[] = [
   {
@@ -72,11 +72,11 @@ describe("core pipeline", () => {
   });
 
   it("keeps the expected exit code on known errors", () => {
-    const error = new DocdriftError("bad config", 2);
+    const error = new DriftcheckError("bad config", 2);
     expect(error).toMatchObject({
       message: "bad config",
       exitCode: 2,
-      name: "DocdriftError",
+      name: "DriftcheckError",
     });
   });
 });

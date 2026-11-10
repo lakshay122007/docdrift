@@ -2,8 +2,8 @@ import { access, readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 
-import { DocdriftError } from "../util/errors.js";
-import { mergeConfig, validateConfig, type DocdriftConfig } from "./schema.js";
+import { DriftcheckError } from "../util/errors.js";
+import { mergeConfig, validateConfig, type DriftcheckConfig } from "./schema.js";
 
 async function exists(file: string): Promise<boolean> {
   try {
@@ -18,7 +18,7 @@ async function readJson(file: string): Promise<unknown> {
   try {
     return JSON.parse(await readFile(file, "utf8"));
   } catch (error) {
-    throw new DocdriftError(
+    throw new DriftcheckError(
       `Could not parse ${file}: ${error instanceof Error ? error.message : String(error)}`,
     );
   }
@@ -27,13 +27,13 @@ async function readJson(file: string): Promise<unknown> {
 export async function loadConfig(
   root: string,
   explicitFile?: string,
-): Promise<DocdriftConfig> {
+): Promise<DriftcheckConfig> {
   if (explicitFile && !(await exists(resolve(root, explicitFile)))) {
-    throw new DocdriftError(`Config file not found: ${explicitFile}`);
+    throw new DriftcheckError(`Config file not found: ${explicitFile}`);
   }
   const candidates = explicitFile
     ? [resolve(root, explicitFile)]
-    : [resolve(root, "docdrift.config.json"), resolve(root, "docdrift.config.js")];
+    : [resolve(root, "driftcheck.config.json"), resolve(root, "driftcheck.config.js")];
 
   for (const file of candidates) {
     if (!(await exists(file))) continue;
@@ -49,9 +49,9 @@ export async function loadConfig(
     if (
       typeof packageData === "object" &&
       packageData !== null &&
-      "docdrift" in packageData
+      "driftcheck" in packageData
     ) {
-      return mergeConfig(validateConfig(packageData.docdrift));
+      return mergeConfig(validateConfig(packageData.driftcheck));
     }
   }
   return mergeConfig({});

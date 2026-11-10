@@ -3,7 +3,7 @@
 import { readFile, writeFile } from "node:fs/promises";
 import { parseArgs } from "node:util";
 import { defaultConfig, ruleIds } from "./config/defaults.js";
-import { DocdriftError } from "./util/errors.js";
+import { DriftcheckError } from "./util/errors.js";
 const packageFile = new URL("../package.json", import.meta.url);
 async function readVersion(): Promise<string> {
   const data: unknown = JSON.parse(await readFile(packageFile, "utf8"));
@@ -18,7 +18,7 @@ async function readVersion(): Promise<string> {
 }
 async function main(): Promise<void> {
   if (Number(process.versions.node.split(".")[0]) < 18)
-    throw new DocdriftError("driftcheck requires Node.js 18 or later");
+    throw new DriftcheckError("driftcheck requires Node.js 18 or later");
   const parsed = parseArgs({
     args: process.argv.slice(2),
     allowPositionals: true,
@@ -30,7 +30,7 @@ async function main(): Promise<void> {
     },
   });
   if (parsed.values.quiet && parsed.values.verbose)
-    throw new DocdriftError("--quiet and --verbose cannot be used together");
+    throw new DriftcheckError("--quiet and --verbose cannot be used together");
   if (parsed.values.version) {
     console.log(await readVersion());
     return;
@@ -44,11 +44,11 @@ async function main(): Promise<void> {
   const command = parsed.positionals[0] ?? "check";
   if (command === "init") {
     await writeFile(
-      "docdrift.config.json",
+      "driftcheck.config.json",
       `${JSON.stringify(defaultConfig, null, 2)}\n`,
       { flag: "wx" },
     );
-    console.log("created docdrift.config.json");
+    console.log("created driftcheck.config.json");
     return;
   }
   if (command === "rules") {
@@ -60,15 +60,15 @@ async function main(): Promise<void> {
   if (command === "explain") {
     const rule = parsed.positionals[1];
     if (!rule || !ruleIds.includes(rule as (typeof ruleIds)[number]))
-      throw new DocdriftError("explain requires a known rule id");
+      throw new DriftcheckError("explain requires a known rule id");
     console.log(`${rule}: see docs/rules/${rule}.md`);
     return;
   }
   if (!["check", "env", "docs", "fix", "baseline"].includes(command))
-    throw new DocdriftError(`Unknown command: ${command}`);
+    throw new DriftcheckError(`Unknown command: ${command}`);
   console.log("nothing to scan");
 }
 void main().catch((error: unknown) => {
   console.error(error instanceof Error ? error.message : String(error));
-  process.exitCode = error instanceof DocdriftError ? error.exitCode : 3;
+  process.exitCode = error instanceof DriftcheckError ? error.exitCode : 3;
 });
