@@ -1,5 +1,5 @@
 {
-  "name": "driftcheck",
+  "name": "@lakshay11goyal/driftcheck",
   "version": "0.1.0",
   "description": "Find where docs and env setup have drifted from the code",
   "type": "module",

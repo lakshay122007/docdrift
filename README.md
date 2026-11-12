@@ -5,7 +5,7 @@ driftcheck finds environment and Markdown documentation that no longer matches a
 ## Install
 
 ```sh
-npx driftcheck .
+npx @lakshay11goyal/driftcheck .
 ```
 
 ## Example
